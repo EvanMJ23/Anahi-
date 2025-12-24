@@ -12,6 +12,9 @@
         background: linear-gradient(135deg, #ff4d6d, #ffb3c6);
         height: 100vh;
         overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .pantalla {
@@ -33,36 +36,41 @@
     }
 
     @keyframes aparecer {
-        from { opacity: 0; transform: scale(0.85); }
+        from { opacity: 0; transform: scale(0.9); }
         to { opacity: 1; transform: scale(1); }
     }
 
     h1 {
-        font-size: 12vw; /* GRANDE para celular */
-        line-height: 1.1;
+        font-size: 2.5em;
+        line-height: 1.2;
         animation: latido 1.5s infinite;
     }
 
     @keyframes latido {
         0%,100% { transform: scale(1); }
-        50% { transform: scale(1.08); }
+        50% { transform: scale(1.05); }
     }
 
     .botones {
         margin-top: 40px;
-        width: 100%;
-        max-width: 500px;
-        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 90%;
+        max-width: 350px;
     }
 
     button {
-        width: 100%;
-        font-size: 6vw;
-        padding: 25px;
-        margin: 15px 0;
+        font-size: 1.1em;
+        padding: 15px;
         border: none;
-        border-radius: 40px;
+        border-radius: 30px;
         cursor: pointer;
+        transition: transform 0.2s, background 0.3s;
+    }
+
+    button:hover {
+        transform: scale(1.07);
     }
 
     .si {
@@ -73,9 +81,6 @@
     .no {
         background: #444;
         color: white;
-        font-size: 5vw;
-        position: absolute;
-        left: 0;
     }
 
     .volver {
@@ -83,12 +88,13 @@
         color: #ff1744;
     }
 
-    /* Corazones */
+    /* Corazones flotando */
     .corazon {
         position: absolute;
         font-size: 20px;
         animation: flotar 6s linear infinite;
         opacity: 0.8;
+        pointer-events: none;
     }
 
     @keyframes flotar {
@@ -102,23 +108,22 @@
 
 <!-- PANTALLA 1 -->
 <div class="pantalla activa" id="menu">
-    <h1>¿QUIERES SER MI NOVIA? 💖</h1>
+    <h1>¿Quieres ser mi novia? 💖</h1>
 
     <div class="botones">
         <button class="si" onclick="irSegura()">SÍ 💕</button>
 
-        <button class="no" id="btnNo">
+        <button class="no">
             NO ❌<br>
             HAZ UNA VOLTERETA MORTAL<br>
-            Y UNA VUELTA AL<br>
-            PLANETA TIERRA 🌍
+            Y UNA VUELTA AL PLANETA TIERRA 🌍
         </button>
     </div>
 </div>
 
 <!-- PANTALLA 2 -->
 <div class="pantalla" id="segura">
-    <h1>ESTA VEZ<br>SÍ ESTÁS SEGURA 🥺</h1>
+    <h1>ESTA VEZ SÍ ESTÁS SEGURA 🥺</h1>
 
     <div class="botones">
         <button class="si" onclick="irFinal()">SÍ LO ESTOY 💘</button>
@@ -128,7 +133,9 @@
 
 <!-- PANTALLA 3 -->
 <div class="pantalla" id="final">
-    <h1 style="font-size:14vw;">TE QUIERO MUCHO 💕</h1>
+    <h1>
+        Ahora escribeme o dime y hazme saber tu respuesta que estoy como loco :)
+    </h1>
 </div>
 
 <script>
@@ -149,28 +156,16 @@ function cambiar(a, b) {
     document.getElementById(b).classList.add("activa");
 }
 
-/* Botón NO escapa */
-const no = document.getElementById("btnNo");
-no.addEventListener("touchstart", mover);
-no.addEventListener("mouseover", mover);
-
-function mover() {
-    const x = Math.random() * (window.innerWidth - no.offsetWidth);
-    const y = Math.random() * (window.innerHeight - no.offsetHeight);
-    no.style.left = x + "px";
-    no.style.top = y + "px";
-}
-
 /* Corazones flotando */
 setInterval(() => {
     const c = document.createElement("div");
     c.className = "corazon";
     c.innerHTML = "❤️";
     c.style.left = Math.random() * 100 + "vw";
-    c.style.fontSize = (18 + Math.random() * 30) + "px";
+    c.style.fontSize = (18 + Math.random() * 25) + "px";
     document.body.appendChild(c);
     setTimeout(() => c.remove(), 6000);
-}, 300);
+}, 350);
 </script>
 
 </body>

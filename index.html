@@ -2,25 +2,25 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>¿Quieres ser mi novia?</title>
 
 <style>
     body {
         margin: 0;
         font-family: 'Segoe UI', sans-serif;
-        background: linear-gradient(135deg, #ff758c, #ff7eb3);
+        background: linear-gradient(135deg, #ff4d6d, #ffb3c6);
         height: 100vh;
         overflow: hidden;
     }
 
     .pantalla {
-        position: absolute;
         width: 100%;
         height: 100%;
         display: none;
         flex-direction: column;
-        align-items: center;
         justify-content: center;
+        align-items: center;
         text-align: center;
         color: white;
         padding: 20px;
@@ -29,75 +29,66 @@
 
     .activa {
         display: flex;
-        animation: aparecer 1s ease;
+        animation: aparecer 0.8s ease;
     }
 
     @keyframes aparecer {
-        from { opacity: 0; transform: scale(0.8); }
+        from { opacity: 0; transform: scale(0.85); }
         to { opacity: 1; transform: scale(1); }
     }
 
     h1 {
-        font-size: 3em;
+        font-size: 12vw; /* GRANDE para celular */
+        line-height: 1.1;
         animation: latido 1.5s infinite;
     }
 
     @keyframes latido {
         0%,100% { transform: scale(1); }
-        50% { transform: scale(1.12); }
+        50% { transform: scale(1.08); }
     }
 
     .botones {
-        margin-top: 30px;
+        margin-top: 40px;
+        width: 100%;
+        max-width: 500px;
         position: relative;
     }
 
     button {
-        font-size: 1.2em;
-        padding: 15px 35px;
-        margin: 10px;
+        width: 100%;
+        font-size: 6vw;
+        padding: 25px;
+        margin: 15px 0;
         border: none;
-        border-radius: 30px;
+        border-radius: 40px;
         cursor: pointer;
-        transition: transform 0.2s;
-    }
-
-    button:hover {
-        transform: scale(1.1);
     }
 
     .si {
-        background: #ff1e56;
+        background: #ff1744;
         color: white;
     }
 
     .no {
-        background: #555;
+        background: #444;
         color: white;
+        font-size: 5vw;
         position: absolute;
-    }
-
-    .sub {
-        font-size: 0.9em;
-        margin-top: 70px;
-        opacity: 0.9;
+        left: 0;
     }
 
     .volver {
         background: white;
-        color: #ff1e56;
-    }
-
-    iframe {
-        display: none;
+        color: #ff1744;
     }
 
     /* Corazones */
     .corazon {
         position: absolute;
-        color: rgba(255,255,255,0.7);
         font-size: 20px;
         animation: flotar 6s linear infinite;
+        opacity: 0.8;
     }
 
     @keyframes flotar {
@@ -109,45 +100,39 @@
 
 <body>
 
-<!-- Música -->
-<iframe id="musica"
-src="https://www.youtube.com/embed/Sw49gcx8bW0?autoplay=1&loop=1&playlist=Sw49gcx8bW0"
-allow="autoplay">
-</iframe>
-
-<!-- Pantalla principal -->
+<!-- PANTALLA 1 -->
 <div class="pantalla activa" id="menu">
-    <h1>¿Quieres ser mi novia? 💖</h1>
+    <h1>¿QUIERES SER MI NOVIA? 💖</h1>
 
     <div class="botones">
-        <button class="si" onclick="irSegura()">SI</button>
-        <button class="no" id="btnNo">NO</button>
-        <div class="sub">→ hacer una voltereta mortal y dar una vuelta al planeta tierra 🌍</div>
+        <button class="si" onclick="irSegura()">SÍ 💕</button>
+
+        <button class="no" id="btnNo">
+            NO ❌<br>
+            HAZ UNA VOLTERETA MORTAL<br>
+            Y UNA VUELTA AL<br>
+            PLANETA TIERRA 🌍
+        </button>
     </div>
 </div>
 
-<!-- Pantalla segura -->
+<!-- PANTALLA 2 -->
 <div class="pantalla" id="segura">
-    <h1>ESTA VEZ SÍ ESTÁS SEGURA 🥺</h1>
+    <h1>ESTA VEZ<br>SÍ ESTÁS SEGURA 🥺</h1>
 
     <div class="botones">
-        <button class="si" onclick="irFinal()">SI LO ESTOY</button>
+        <button class="si" onclick="irFinal()">SÍ LO ESTOY 💘</button>
         <button class="volver" onclick="volver()">VOLVER ATRÁS</button>
     </div>
 </div>
 
-<!-- Pantalla final -->
+<!-- PANTALLA 3 -->
 <div class="pantalla" id="final">
-    <h1 style="font-size:4em;">TE QUIERO MUCHO 💕</h1>
+    <h1 style="font-size:14vw;">TE QUIERO MUCHO 💕</h1>
 </div>
 
 <script>
-function iniciarMusica() {
-    document.getElementById("musica").style.display = "block";
-}
-
 function irSegura() {
-    iniciarMusica();
     cambiar("menu", "segura");
 }
 
@@ -166,12 +151,15 @@ function cambiar(a, b) {
 
 /* Botón NO escapa */
 const no = document.getElementById("btnNo");
-no.addEventListener("mouseover", () => {
-    const x = Math.random() * (window.innerWidth - 100);
-    const y = Math.random() * (window.innerHeight - 100);
+no.addEventListener("touchstart", mover);
+no.addEventListener("mouseover", mover);
+
+function mover() {
+    const x = Math.random() * (window.innerWidth - no.offsetWidth);
+    const y = Math.random() * (window.innerHeight - no.offsetHeight);
     no.style.left = x + "px";
     no.style.top = y + "px";
-});
+}
 
 /* Corazones flotando */
 setInterval(() => {
@@ -179,7 +167,7 @@ setInterval(() => {
     c.className = "corazon";
     c.innerHTML = "❤️";
     c.style.left = Math.random() * 100 + "vw";
-    c.style.fontSize = (15 + Math.random() * 25) + "px";
+    c.style.fontSize = (18 + Math.random() * 30) + "px";
     document.body.appendChild(c);
     setTimeout(() => c.remove(), 6000);
 }, 300);
